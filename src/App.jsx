@@ -4,6 +4,7 @@ import { useState } from "react";
 import Inventory from './components/Inventory';
 import Profile from './components/Profile';
 import Drive from './components/Drive';
+import Refresh from './components/Refresh';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
@@ -24,9 +25,9 @@ function App() {
           <Route path="/" element={<h1>Welcome to the Garage!</h1>} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/drive1" element={<Drive />} />
-          <Route path="/drive2" element={<Drive x={50} y={50} direction="EAST" />} />
-          <Route path="/drive3" element={<Drive x={-50} y={-50} direction="SOUTH" />} />
+          <Route path="/drive1" element={<><Refresh /><Drive /></>} />
+          <Route path="/drive2" element={<><Refresh /><Drive x={50} y={50} direction="EAST" /></>} />
+          <Route path="/drive3" element={<><Refresh /><Drive x={-50} y={-50} direction="SOUTH" /></>} />
         </Routes>
       </BrowserRouter>
     </div>

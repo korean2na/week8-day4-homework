@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router"
 
 export default function Drive(props) {
-    const navigate = useNavigate()
-    navigate(0)
-
     const [cars, setCars] = useState([
         {
             "id": 1,
