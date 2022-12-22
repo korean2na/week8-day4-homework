@@ -21,6 +21,7 @@ export default function AddCar() {
         <div className="addCarForm">
             <h2><strong>Add a New Car to Inventory</strong></h2>
             <form onSubmit={handleSubmit}>
+                <div className="row row-cols-4 justify-content-center gap-4 mt-5">
                 <input type="text" name="name" placeholder="Name" />
                 <input type="integer" name="year" placeholder="year" />
                 <input type="integer" name="selling_price" placeholder="Selling Price" />
@@ -34,7 +35,8 @@ export default function AddCar() {
                 <input type="text" name="max_power" placeholder="Max Power" />
                 <input type="text" name="torque" placeholder="Torque" />
                 <input type="integer" name="seats" placeholder="Seats" />
-                <button>Add Car</button>
+                </div>
+                <button class="btn btn-primary col-2 mt-5">Add Car</button>
             </form>
         </div>
     )
