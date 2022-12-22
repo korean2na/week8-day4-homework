@@ -48,10 +48,34 @@ export const DataProvider = function (props) {
         }
     }
 
+    async function addCar(name, year, selling_price, km_driven, fuel, seller_type, transmission, owner, mileage, engine, max_power, torque, seats) {
+        const newCar = {
+            name: name,
+            year: year,
+            selling_price: selling_price,
+            km_driven: km_driven,
+            fuel: fuel,
+            seller_type: seller_type,
+            transmission: transmission,
+            owner: owner,
+            mileage: mileage,
+            engine: engine,
+            max_power: max_power,
+            torque: torque,
+            seats: seats,
+        }
+
+        const doc = await addDoc(collection(db, 'cars'), newCar)
+
+        newCar.id = doc.id
+
+        setCars([newCar, ...cars])
+    }
 
     const value = {
         cars,
-        getCar
+        getCar,
+        addCar
     }
 
     return (
