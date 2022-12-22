@@ -1,43 +1,50 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Car from '../components/Car'
+import { DataContext } from '../contexts/DataProvider'
 
 export default function CarSingle() {
     const [car, setCar] = useState({})
     const { id } = useParams()
     let idTag = id
     const navigate = useNavigate()
+    const { getCar } = useContext(DataContext)
+    const { cars } = useContext(DataContext)
 
     useEffect(() => {
-        async function getCar() {
-            const response = await fetch(`//my-json-server.typicode.com/Llang8/cars-api/cars/${id}`)
-            const data = await response.json()
+        async function handleLoadCar() {
+            const data = await getCar(id)
             setCar(data)
         }
 
-        getCar()
+        handleLoadCar()
     }, [id])
 
     return(
         <div className="car">
             <Car car={car}/>
-            {
-                (id > 0) ?
-                <button onClick={() => {
-                    idTag--
-                    navigate(`/inventory/${idTag}`)
-                }}>Previous Car</button>
-                : <></>
-            }
-            {
-                // might need to get length of cars array from a separate fetch just to use for this if statement instead of hard coding in the max id
-                (id < 15) ?
-                <button onClick={() => {
-                    idTag++
-                    navigate(`/inventory/${idTag}`)
-                }}>Next Car</button>
-                : <></>
-            }
+            <div className="row justify-content-center">
+                {
+                    (id > 0) ?
+                    <div className="col-2">
+                        <button class="btn btn-warning" onClick={() => {
+                            idTag--
+                            navigate(`/inventory/${idTag}`)
+                        }}>Previous Car</button>
+                    </div>
+                    : <></>
+                }
+                {
+                    (id < cars.length - 1) ?
+                    <div className="col-2">
+                        <button class="btn btn-warning" onClick={() => {
+                            idTag++
+                            navigate(`/inventory/${idTag}`)
+                        }}>Next Car</button>
+                    </div>
+                    : <></>
+                }
+            </div>
         </div>
     )
 }

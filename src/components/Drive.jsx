@@ -1,21 +1,34 @@
-import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from 'react-router-dom'
 import DrivingCar from '../components/DrivingCar'
+import { DataContext } from '../contexts/DataProvider'
 
 export default function Drive(props) {
     const [car, setCar] = useState({})
     const { id } = useParams()
+    let idTag = id
+    const navigate = useNavigate()
+    const { getCar } = useContext(DataContext)
+    const { cars } = useContext(DataContext)
+
+    // useEffect(() => {
+    //     async function getCar() {
+    //         const response = await fetch(`//my-json-server.typicode.com/Llang8/cars-api/cars/${id}`)
+    //         const data = await response.json()
+    //         setCar(data)
+    //     }
+
+    //     getCar()
+    // }, [])
 
     useEffect(() => {
-        async function getCar() {
-            const response = await fetch(`//my-json-server.typicode.com/Llang8/cars-api/cars/${id}`)
-            const data = await response.json()
+        async function handleLoadCar() {
+            const data = await getCar(id)
             setCar(data)
-            console.log(data)
         }
 
-        getCar()
-    }, [])
+        handleLoadCar()
+    }, [id])
 
     const [xCoord, setXCoord] = useState(props.x || 0)
     const [yCoord, setYCoord] = useState(props.y || 0)
@@ -83,28 +96,52 @@ export default function Drive(props) {
 
     return (
         <div className="drive">
+            <div className="drive-info">
+                
+                <h2><strong>Current Position: ({xCoord} X-Coord., {yCoord} Y-Coord.)</strong></h2>
+                <h2><strong>Current Direction: {direction}</strong></h2>
+                <hr />
+                <button class="btn btn-primary" onClick={ () => forward(direction,5)  }>Drive Forward By 5</button>
+                <br />
+                <button class="btn btn-primary" onClick={ () => forward(direction,1) }>Drive Forward By 1</button>
+                <br />
+                <button class="btn btn-primary" onClick={ () => turnLeft(direction) }>Turn Left (90°)</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" onClick={ () => turnRight(direction)  }>Turn Right (90°)</button>
+                <br />
+                <button class="btn btn-primary" onClick={ () => backward(direction,1) }>Drive Backward By 1</button>
+                <br />
+                <button class="btn btn-primary" onClick={ () => backward(direction,5)  }>Drive Backward By 5</button>
+            </div>
+            <hr />
             <div className="car-info">
+                <br />
                 <h5>Currently Driving:</h5>
                 <DrivingCar car={car}/>
+                <div className="row justify-content-center">
+                    {
+                        (id > 0) ?
+                        <div className="col-2">
+                            <button class="btn btn-warning" onClick={() => {
+                                idTag--
+                                navigate(`/drive/${props.track}/${idTag}`)
+                            }}>Previous Car</button>
+                        </div>
+                        : <></>
+                    }
+                    {
+                        (id < cars.length - 1) ?
+                        <div className="col-2">
+                            <button class="btn btn-warning" onClick={() => {
+                                idTag++
+                                navigate(`/drive/${props.track}/${idTag}`)
+                            }}>Next Car</button>
+                        </div>
+                        : <></>
+                    }
+                </div>
+                <br />
             </div>
-            <div className="drive-info">
-                <h2>Current Position: ({xCoord} X-Coord., {yCoord} Y-Coord.)</h2>
-                <h2>Current Direction: {direction}</h2>
-                <hr />
-                <br /><br />
-                <button onClick={ () => forward(direction,5)  }>Drive Forward By 5</button>
-                <br />
-                <button onClick={ () => forward(direction,1) }>Drive Forward By 1</button>
-                <br />
-                <button onClick={ () => turnLeft(direction) }>Turn Left (90°)</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button onClick={ () => turnRight(direction)  }>Turn Right (90°)</button>
-                <br />
-                <button onClick={ () => backward(direction,1) }>Drive Backward By 1</button>
-                <br />
-                <button onClick={ () => backward(direction,5)  }>Drive Backward By 5</button>
-            </div>
-            <br />
         </div>
     )
 }

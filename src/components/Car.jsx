@@ -1,10 +1,25 @@
-// import setFeaturedCar from '../components/Inventory'
+import { Link } from "react-router-dom"
 
 export default function Car(props) {
+    function buildTitle() {
+        if (props.showLink) {
+            return (
+                <h3><Link class="page-link text-primary" to={ `/inventory/${props.car.id}` }><strong>{props.car.year} {props.car.name}</strong></Link></h3>
+            )    
+        }
+        else {
+            return (
+                <h3><strong>{props.car.year} {props.car.name}</strong></h3>
+            )   
+        }
+    }
+
     return (
-        // <div className="car" onClick={ () => setFeaturedCar(props.car) }>
-        <div className="car">
-            <h3>{props.car.year} {props.car.name}</h3>
+        <div className="row justify-content-center my-4">
+        <div className="col-8 ">
+        <div className="car card p-3">
+            { buildTitle() }
+            <hr />
             <h4>(ID #: {props.car.id})</h4>
             <p>Selling Price: {props.car.selling_price}</p>
             <p>KM Driven: {props.car.km_driven}</p>
@@ -17,7 +32,8 @@ export default function Car(props) {
             <p>Seats: {props.car.seats}</p>
             <p>Owner: {props.car.owner}</p>
             <p>Seller Type: {props.car.seller_type}</p>
-            <hr />
+        </div>
+        </div>
         </div>
     )
 }

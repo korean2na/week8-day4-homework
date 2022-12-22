@@ -7,35 +7,40 @@ import Drive from './components/Drive';
 import Refresh from './components/Refresh';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <nav>
-          <ul>
-            <li><Link to="/inventory">Inventory</Link></li>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/drive1/0">Drive</Link></li>
-            <li><Link to="/drive2/0">Drive in the NE area</Link></li>
-            <li><Link to="/drive3/0">Drive in the SW area</Link></li>
-          </ul>
+        <nav class="navbar navbar-expand-lg bg-light">
+          <div className="container-fluid">
+            <ul class="navbar-nav gap-5">
+              <li class="nav-item"><Link to="/inventory" class="nav-link active">Inventory</Link></li>
+              <li class="nav-item"><Link to="/profile" class="nav-link active">Profile</Link></li>
+              <li class="nav-item"><Link to="/drive/1/0" class="nav-link active">Drive</Link></li>
+              <li class="nav-item"><Link to="/drive/2/0" class="nav-link active">Drive in the NE area</Link></li>
+              <li class="nav-item"><Link to="/drive/3/0" class="nav-link active">Drive in the SW area</Link></li>
+            </ul>
+          </div>
         </nav>
         <hr />
         <Routes>
-          <Route path="/" element={<h1>Welcome to the Garage!</h1>} />
+          <Route path="/" element={<h1><strong>Welcome to the Garage!</strong></h1>} />
           <Route path="/inventory">
             <Route path="" element={<Inventory />}/>
             <Route path=":id" element={<CarSingle />}/>
           </Route>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/drive1">
-            <Route path=":id" element={<><Refresh /><Drive /></>} />
-          </Route>
-          <Route path="/drive2">
-            <Route path=":id" element={<><Refresh /><Drive x={50} y={50} direction="EAST" /></>} />
-          </Route>
-          <Route path="/drive3">
-            <Route path=":id" element={<><Refresh /><Drive x={-50} y={-50} direction="SOUTH" /></>} />
+          <Route path="/drive">
+            <Route path="1">
+              <Route path=":id" element={<><Refresh /><Drive track={1} /></>} />
+            </Route>
+            <Route path="2">
+              <Route path=":id" element={<><Refresh /><Drive track={2} x={50} y={50} direction="EAST" /></>} />
+            </Route>
+            <Route path="3">
+              <Route path=":id" element={<><Refresh /><Drive track={3} x={-50} y={-50} direction="SOUTH" /></>} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
