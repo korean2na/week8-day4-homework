@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useContext } from 'react';
-import Profile from './components/Profile';
+import Profile from './views/Profile';
 import Inventory from './views/Inventory';
 import CarSingle from './views/CarSingle';
-import AddCar from './components/AddCar';
-import Drive from './components/Drive';
+import AddCar from './views/AddCar';
+import Drive from './views/Drive';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AuthContext } from './contexts/AuthProvider';
 
