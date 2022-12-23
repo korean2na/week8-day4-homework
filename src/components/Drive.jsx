@@ -27,6 +27,7 @@ export default function Drive(props) {
     useEffect(() => {
         setXCoord(props.x || 0)
         setYCoord(props.y || 0)
+        setDirection(props.direction || "NORTH")
     }, [props.track])
 
     useEffect(() => {
@@ -100,28 +101,52 @@ export default function Drive(props) {
 
     return (
         <div className="drive">
-            <div className="drive-info">
+            <div className="drive-info row justify-content-center align-items-center">
+                <div className="col-4 card gap-4 py-4">
+                    <h2>Current Position: <br /> <strong>({xCoord} X-Coord., {yCoord} Y-Coord.)</strong></h2>
+                    <h2>Current Direction: <br /> <strong>{direction}</strong></h2>
+                </div>
+
+                <div className="col-5">
+                    <div className="row justify-content-center pb-2">
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => forward(direction,5)  }>Drive Forward By 5</button>
+                        </div>
+                    </div>
+                    <div className="row justify-content-center pb-2">
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => forward(direction,1) }>Drive Forward By 1</button>
+                        </div>
+                    </div>
+                    <div className="row justify-content-center pb-2">
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => turnLeft(direction) }>Turn Left (90°)</button>
+                        </div>
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => turnRight(direction)  }>Turn Right (90°)</button>
+                        </div>
+                    </div>
+                    <div className="row justify-content-center pb-2">
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => backward(direction,1) }>Drive Backward By 1</button>
+                        </div>
+                    </div>
+                    <div className="row justify-content-center">
+                        <div className="col-4">
+                            <button class="btn btn-primary" onClick={ () => backward(direction,5)  }>Drive Backward By 5</button>
+                        </div>
+                    </div>
+                </div>
                 
-                <h2><strong>Current Position: ({xCoord} X-Coord., {yCoord} Y-Coord.)</strong></h2>
-                <h2><strong>Current Direction: {direction}</strong></h2>
-                <hr />
-                <button class="btn btn-primary" onClick={ () => forward(direction,5)  }>Drive Forward By 5</button>
-                <br />
-                <button class="btn btn-primary" onClick={ () => forward(direction,1) }>Drive Forward By 1</button>
-                <br />
-                <button class="btn btn-primary" onClick={ () => turnLeft(direction) }>Turn Left (90°)</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn btn-primary" onClick={ () => turnRight(direction)  }>Turn Right (90°)</button>
-                <br />
-                <button class="btn btn-primary" onClick={ () => backward(direction,1) }>Drive Backward By 1</button>
-                <br />
-                <button class="btn btn-primary" onClick={ () => backward(direction,5)  }>Drive Backward By 5</button>
             </div>
             <hr />
-            <div className="car-info">
-                <br />
+            <div className="car-info mt-4">
                 <h5>Currently Driving:</h5>
-                <DrivingCar car={car}/>
+                <div className="row justify-content-center">
+                    <div className="card col-5 pt-3 pb-2 my-3">
+                        <DrivingCar car={car}/>
+                    </div>
+                </div>
                 <div className="row justify-content-center">
                     {
                         (id > 0) ?
