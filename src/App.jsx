@@ -6,7 +6,6 @@ import Inventory from './views/Inventory';
 import CarSingle from './views/CarSingle';
 import AddCar from './components/AddCar';
 import Drive from './components/Drive';
-import Refresh from './components/Refresh';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AuthContext } from './contexts/AuthProvider';
 
@@ -16,25 +15,24 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-lg bg-light pb-0">
           <div className="container-fluid">
-            <ul class="navbar-nav gap-5">
-              <li class="nav-item"><Link to="/profile" class="nav-link active link-primary">Profile</Link></li>
+            <ul class="navbar-nav align-items-center gap-4">
               <li class="nav-item"><Link to="/inventory" class="nav-link active link-primary">Inventory</Link></li>
               <li class="nav-item"><Link to="/add-car" class="nav-link active link-primary">Add New Car</Link></li>
               <li class="nav-item"><Link to="/drive/1/0" class="nav-link active link-primary">Drive</Link></li>
               <li class="nav-item"><Link to="/drive/2/0" class="nav-link active link-primary">Drive in the NE area</Link></li>
               <li class="nav-item"><Link to="/drive/3/0" class="nav-link active link-primary">Drive in the SW area</Link></li>
             </ul>
-            <ul class="navbar-nav gap-3">
+            <ul class="navbar-nav align-items-center gap-4">
               {
                 (user.loggedIn) ?
                 <>
-                <li class="nav-item nav-link active mt-2"><strong>Logged in as: { user.username }</strong></li>
+                <li class="nav-item"><strong>Logged in as:</strong> <Link to="/profile" class="nav-link active link-primary"><strong>{ user.username }</strong></Link></li>
                 <li class="nav-item nav-link active"><strong><button onClick={logout}  class="btn btn-danger">Logout</button></strong></li> 
                 </> :
                 <>
-                <li class="nav-item nav-link active mt-2"><strong>(Currently not logged in.)</strong></li>
+                <li class="nav-item"><strong>(Currently not logged in.)</strong></li>
                 <li class="nav-item nav-link active"><strong><button onClick={login} class="btn btn-success">Login</button></strong></li>
                 </>
               }
