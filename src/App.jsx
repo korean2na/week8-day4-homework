@@ -52,13 +52,13 @@ function App() {
           <Route path="/add-car" element={<AddCar />} />
           <Route path="/drive">
             <Route path="1">
-              <Route path=":id" element={<><Refresh /><Drive track={1} /></>} />
+              <Route path=":id" element={<Drive track={1} />} />
             </Route>
             <Route path="2">
-              <Route path=":id" element={<><Refresh /><Drive track={2} x={50} y={50} direction="EAST" /></>} />
+              <Route path=":id" element={<Drive track={2} x={50} y={50} direction="EAST" />} />
             </Route>
             <Route path="3">
-              <Route path=":id" element={<><Refresh /><Drive track={3} x={-50} y={-50} direction="SOUTH" /></>} />
+              <Route path=":id" element={<Drive track={3} x={-50} y={-50} direction="SOUTH" />} />
             </Route>
           </Route>
         </Routes>

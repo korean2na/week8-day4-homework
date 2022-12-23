@@ -10,6 +10,9 @@ export default function Drive(props) {
     const navigate = useNavigate()
     const { getCar } = useContext(DataContext)
     const { cars } = useContext(DataContext)
+    const [xCoord, setXCoord] = useState(props.x || 0)
+    const [yCoord, setYCoord] = useState(props.y || 0)
+    const [direction, setDirection] = useState(props.direction || "NORTH")
 
     // useEffect(() => {
     //     async function getCar() {
@@ -22,6 +25,11 @@ export default function Drive(props) {
     // }, [])
 
     useEffect(() => {
+        setXCoord(props.x || 0)
+        setYCoord(props.y || 0)
+    }, [props.track])
+
+    useEffect(() => {
         async function handleLoadCar() {
             const data = await getCar(id)
             setCar(data)
@@ -29,10 +37,6 @@ export default function Drive(props) {
 
         handleLoadCar()
     }, [id])
-
-    const [xCoord, setXCoord] = useState(props.x || 0)
-    const [yCoord, setYCoord] = useState(props.y || 0)
-    const [direction, setDirection] = useState(props.direction || "NORTH")
 
     function forward(dir, dist) {
         if (dir === "NORTH") {
